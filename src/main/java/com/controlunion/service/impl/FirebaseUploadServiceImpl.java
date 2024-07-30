@@ -36,19 +36,10 @@ public class FirebaseUploadServiceImpl implements FirebaseUploadService {
 
         String blobName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
         Bucket bucket = storage.get(firebaseURL);
-
         BlobInfo blobInfo = BlobInfo.newBuilder(bucket.getName(), blobName).build();
-        System.out.println(blobInfo);
         var saved = bucket.create(blobName, multipartFile.getInputStream(), multipartFile.getContentType());
-        System.out.println(saved);
         ClassPathResource json = new ClassPathResource("test-project-dc8cd-firebase-adminsdk-2u2s9-467cf2b12c.json");
-        System.out.println(saved.getMediaLink());
-        System.out.println(saved.getSelfLink());
         Credentials credentials = GoogleCredentials.fromStream(json.getInputStream());
-        System.out.println();
-        String fileUrl = String.format("https://storage.googleapis.com/%s/%s", bucket.getName(), saved.getName());
-        saved.getMediaLink();
-        System.out.println(saved.asBlobInfo());;
         return storage.get(saved.getBlobId()).signUrl(36500, TimeUnit.DAYS, Storage.SignUrlOption.signWith((ServiceAccountSigner) credentials)).toString();
     }
 
@@ -57,11 +48,9 @@ public class FirebaseUploadServiceImpl implements FirebaseUploadService {
     public byte[] downloadFile(String fileName, String firebaseURL) {
         Bucket bucket = storage.get(firebaseURL);
         var blob = bucket.get(fileName);
-
         if (blob == null) {
             throw new IOException("No such file in storage: " + fileName);
         }
-
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         blob.downloadTo(outputStream);
         System.out.println(blob.getMediaLink());

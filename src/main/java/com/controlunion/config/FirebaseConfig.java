@@ -18,18 +18,6 @@ import java.io.IOException;
 
 @Configuration
 public class FirebaseConfig {
-//    @Bean
-//    public FirebaseApp firebaseApp() throws IOException {
-//        FileInputStream serviceAccount =
-//                new FileInputStream("src/main/resources/test-project-dc8cd-firebase-adminsdk-2u2s9-467cf2b12c.json");
-//
-//        FirebaseOptions options = new FirebaseOptions.Builder()
-//                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-//                .setStorageBucket("test-project-dc8cd.appspot.com")
-//                .build();
-//
-//        return FirebaseApp.initializeApp(options);
-//    }
 
     @Bean
     public Storage storage() throws IOException {
